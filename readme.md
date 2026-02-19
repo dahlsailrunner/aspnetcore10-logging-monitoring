@@ -29,6 +29,10 @@ This is a simple e-commerce application for learning purposes.
 
 Here are the features:
 
+* **Scratchpad (HelloLogging)**
+  * Really simple examples of logging patterns and setup code.  Uses the
+  ASP.NET Core Empty web template and adds some very concise examples.
+
 * **API**
   * `GET Agent` method (in `AgentController.cs`) that provides some simple AI functionality (see the [AI section](#ai-setup-notes) below)
   * `GET` based on category (or "all") and by id allow anonymous requests
