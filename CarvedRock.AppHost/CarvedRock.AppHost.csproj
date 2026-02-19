@@ -1,4 +1,5 @@
-<Project Sdk="Aspire.AppHost.Sdk/13.1.0">
+<Project Sdk="Microsoft.NET.Sdk">
+  <Sdk Name="Aspire.AppHost.Sdk" Version="13.0.0" />
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -9,6 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" />
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.MailPit" />
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.McpInspector" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarvedRock.Api\CarvedRock.Api.csproj" />
+    <ProjectReference Include="..\CarvedRock.Mcp\CarvedRock.Mcp.csproj" />
+    <ProjectReference Include="..\CarvedRock.WebApp\CarvedRock.WebApp.csproj" />
+    <ProjectReference Include="..\demo.duendesoftware.com\Duende.IdentityServer.Demo.csproj" />
     <ProjectReference Include="..\HelloLogging\HelloLogging.csproj" />
   </ItemGroup>
 

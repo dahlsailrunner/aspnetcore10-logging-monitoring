@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+	<IsPublishable>true</IsPublishable>
+	<EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+	<UserSecretsId>466b1730-2aa2-4ba0-be10-e48444797505</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Azure.AI.OpenAI" />
+    <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <PackageReference Include="Azure.AI.OpenAI" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+    <PackageReference Include="IdentityModel" />
+    <PackageReference Include="Microsoft.Agents.AI.OpenAI" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
+    <PackageReference Include="ModelContextProtocol" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />        
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" />        
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarvedRock.ServiceDefaults\CarvedRock.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\CarvedRock.Domain\CarvedRock.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
