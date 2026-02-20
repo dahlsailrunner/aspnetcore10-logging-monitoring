@@ -32,5 +32,4 @@ api.WithReference(mcp);  // add reference to mcp server from API
 builder.AddMcpInspector("mcp-inspector")
     .WithMcpServer(mcp, path: "");
 
-
 builder.Build().Run();
