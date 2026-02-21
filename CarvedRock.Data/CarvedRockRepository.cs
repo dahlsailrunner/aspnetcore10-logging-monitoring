@@ -11,13 +11,15 @@ public class CarvedRockRepository(LocalContext ctx) : ICarvedRockRepository
 
         if (!validCategories.Contains(category))
         {
-            throw new Exception($"Simulated exception for category {category}");
+            var ex = new Exception("Simulated exception for category!");
+            ex.Data["Category"] = category;
+            throw ex;
+            //throw new Exception($"Simulated exception for category {category}");
         }
 
         return await ctx.Products.Where(p => p.Category == category || category == "all")
             .OrderBy(p => p.Id)
             .ToListAsync();
-
     }
 
     public async Task<Product?> GetProductByIdAsync(int id)
@@ -37,27 +39,27 @@ public class CarvedRockRepository(LocalContext ctx) : ICarvedRockRepository
         await ctx.SaveChangesAsync();
         return product;
     }
-    
+
     public async Task<Product> UpdateProductAsync(Product product)
     {
-        var existingProduct = await ctx.Products.FindAsync(product.Id) 
+        var existingProduct = await ctx.Products.FindAsync(product.Id)
             ?? throw new KeyNotFoundException($"Product with ID {product.Id} not found");
-            
+
         existingProduct.Name = product.Name!.Trim();
         existingProduct.Description = product.Description;
         existingProduct.Price = product.Price;
         existingProduct.Category = product.Category;
         existingProduct.ImgUrl = product.ImgUrl;
-        
+
         await ctx.SaveChangesAsync();
         return existingProduct;
     }
-    
+
     public async Task DeleteProductAsync(int id)
     {
-        var product = await ctx.Products.FindAsync(id) 
+        var product = await ctx.Products.FindAsync(id)
             ?? throw new KeyNotFoundException($"Product with ID {id} not found");
-            
+
         ctx.Products.Remove(product);
         await ctx.SaveChangesAsync();
     }

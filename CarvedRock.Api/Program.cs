@@ -2,14 +2,20 @@ using CarvedRock.Api;
 using CarvedRock.Core;
 using CarvedRock.Data;
 using CarvedRock.Domain;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
+
+builder.Services.AddValidatorsFromAssemblyContaining<NewProductValidator>();
+builder.Services.AddProblemDetails(opts => opts.CustomizeProblemDetails = CustomizeProblemDetails);
+builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
 
 // builder.AddAzureOpenAIClient("kyt-AzureOpenAI", configureSettings: settings =>
 // {
@@ -55,6 +61,7 @@ builder.Services.AddScoped<ICarvedRockRepository, CarvedRockRepository>();
 
 var app = builder.Build();
 app.MapDefaultEndpoints();
+app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {
@@ -74,7 +81,8 @@ static void SetupDevelopment(WebApplication app)
         var services = scope.ServiceProvider;
         var context = services.GetRequiredService<LocalContext>();
         context.MigrateAndCreateData();
-    };
+    }
+    ;
 
     app.UseSwagger();
     app.UseSwaggerUI(options =>
@@ -85,4 +93,11 @@ static void SetupDevelopment(WebApplication app)
     });
 }
 
+static void CustomizeProblemDetails(ProblemDetailsContext context)
+{
+    context.ProblemDetails.Detail = "Provide the instance value when contacting us for support";
+    context.ProblemDetails.Instance = Activity.Current?.RootId;
+}
+
 record AIConnection(string Endpoint, string Key, string Deployment);
+

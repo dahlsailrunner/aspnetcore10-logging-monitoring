@@ -1,9 +1,10 @@
 using CarvedRock.Core;
 using CarvedRock.Data.Entities;
+using FluentValidation.Results;
 
 namespace CarvedRock.Domain;
 
-public interface IProductLogic 
+public interface IProductLogic
 {
     Task<IEnumerable<Product>> GetProductsForCategoryAsync(string category);
     Task<Product?> GetProductByIdAsync(int id);

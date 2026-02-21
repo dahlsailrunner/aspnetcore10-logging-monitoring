@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarvedRock.Api;
 
-public static class ValidationErrorResponseHelper
+public static class ResponseHelpers
 {
     public static ProblemDetails CreateValidationProblemDetails(this ValidationResult failedValidationResult, HttpContext ctx)
-    {        
+    {
         var problemDetails = new ProblemDetails
         {
             Title = "Validation error",

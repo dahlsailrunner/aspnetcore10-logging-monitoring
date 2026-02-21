@@ -56,15 +56,10 @@ var app = builder.Build();
 
 app.MapDefaultEndpoints();
 
-
-if (!app.Environment.IsDevelopment())
+//if (!app.Environment.IsDevelopment())
 //{
-//    app.UseDeveloperExceptionPage();
+app.UseExceptionHandler("/Error");
 //}
-//else
-{
-    app.UseExceptionHandler("/Error");
-}
 
 app.UseStaticFiles();
 

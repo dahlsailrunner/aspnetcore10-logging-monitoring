@@ -15,6 +15,17 @@ public partial class ProductController(IProductLogic productLogic) : ControllerB
     [AllowAnonymous]
     public async Task<IEnumerable<Product>> Get(string category = "all")
     {
+        // try
+        // {
+        //     var response = await productLogic.GetProductsForCategoryAsync(category);
+        //     return response;
+        // }
+        // catch (Exception ex)
+        // {
+        //     var baseMsg = ex.GetBaseException().Message;
+        //     throw new Exception($"Error when calling GetProductForCategory: {baseMsg}", ex);
+        // }
+
         return await productLogic.GetProductsForCategoryAsync(category);
     }
 
@@ -40,10 +51,11 @@ public partial class ProductController(IProductLogic productLogic) : ControllerB
     public async Task<IActionResult> CreateProduct([FromBody] NewProductModel newProduct)
     {
         var createdProduct = await productLogic.CreateProductAsync(newProduct);
-        var uri = Request.Path.Value + $"/{createdProduct.Id}";
+
+        var uri = Request.Path.Value + $"/{createdProduct!.Id}";
         return Created(uri, createdProduct);
     }
-    
+
     [HttpPut("{id:int}")]
     [Authorize(Roles = "admin")]
     [SwaggerOperation("Updates a single product.")]
@@ -62,7 +74,7 @@ public partial class ProductController(IProductLogic productLogic) : ControllerB
             return NotFound();
         }
     }
-    
+
     [HttpDelete("{id:int}")]
     [Authorize(Roles = "admin")]
     [SwaggerOperation("Deletes a single product.")]
