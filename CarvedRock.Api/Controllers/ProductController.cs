@@ -15,6 +15,7 @@ public partial class ProductController(IProductLogic productLogic) : ControllerB
     [AllowAnonymous]
     public async Task<IEnumerable<Product>> Get(string category = "all")
     {
+        // NOTE: Don't do this!  It's not needed and adds confusion.
         // try
         // {
         //     var response = await productLogic.GetProductsForCategoryAsync(category);
