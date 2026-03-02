@@ -3,14 +3,17 @@ using CarvedRock.Data;
 using CarvedRock.Data.Entities;
 using CarvedRock.Domain.Mapping;
 using FluentValidation;
+using Microsoft.Extensions.Logging;
 
 namespace CarvedRock.Domain;
 
 public class ProductLogic(ICarvedRockRepository repo,
-            IValidator<NewProductModel> newProductValidator) : IProductLogic
+            IValidator<NewProductModel> newProductValidator,
+            ILogger<ProductLogic> logger) : IProductLogic
 {
     public async Task<IEnumerable<Product>> GetProductsForCategoryAsync(string category)
     {
+        logger.LogInformation("Calling repository.");
         return await repo.GetProductsAsync(category);
     }
 
@@ -21,7 +24,7 @@ public class ProductLogic(ICarvedRockRepository repo,
 
     public async Task<ProductModel> CreateProductAsync(NewProductModel newProduct)
     {
-        await newProductValidator.ValidateAndThrowAsync(newProduct);        
+        await newProductValidator.ValidateAndThrowAsync(newProduct);
 
         var productMapper = new ProductMapper();
 

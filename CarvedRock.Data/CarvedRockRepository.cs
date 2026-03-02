@@ -1,9 +1,11 @@
 ﻿using CarvedRock.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace CarvedRock.Data;
 
-public class CarvedRockRepository(LocalContext ctx) : ICarvedRockRepository
+public class CarvedRockRepository(LocalContext ctx, ILogger<CarvedRockRepository> logger)
+        : ICarvedRockRepository
 {
     public async Task<List<Product>> GetProductsAsync(string category)
     {
@@ -17,6 +19,7 @@ public class CarvedRockRepository(LocalContext ctx) : ICarvedRockRepository
             //throw new Exception($"Simulated exception for category {category}");
         }
 
+        logger.LogInformation("Querying database.");
         return await ctx.Products.Where(p => p.Category == category || category == "all")
             .OrderBy(p => p.Id)
             .ToListAsync();

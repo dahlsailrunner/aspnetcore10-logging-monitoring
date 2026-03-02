@@ -9,7 +9,8 @@ namespace CarvedRock.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public partial class ProductController(IProductLogic productLogic) : ControllerBase
+public partial class ProductController(IProductLogic productLogic,
+                            ILogger<ProductController> logger) : ControllerBase
 {
     [HttpGet]
     [AllowAnonymous]
@@ -27,6 +28,7 @@ public partial class ProductController(IProductLogic productLogic) : ControllerB
         //     throw new Exception($"Error when calling GetProductForCategory: {baseMsg}", ex);
         // }
 
+        logger.LogInformation("Calling product logic.");
         return await productLogic.GetProductsForCategoryAsync(category);
     }
 
