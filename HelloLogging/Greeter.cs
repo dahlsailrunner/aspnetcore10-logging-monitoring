@@ -13,8 +13,8 @@ public class Greeter(ILogger<Greeter> logger)
         {
             logger.Log(LogLevel.Warning, "Trouble detected.  Use caution.");
         }
-        logger.LogInformation($"string-interpolation: Hello, {whoToGreet}");
-        logger.LogInformation("template: Hello, {parameter-whoToGreet}", whoToGreet);
+        //logger.LogInformation($"string-interpolation: Hello, {whoToGreet}");
+        logger.LogInformation("Hello, {whoToGreet}", whoToGreet);
         return $"Hello, {whoToGreet}!";
     }
 }
