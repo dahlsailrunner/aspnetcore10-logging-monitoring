@@ -13,7 +13,11 @@ public class ProductLogic(ICarvedRockRepository repo,
 {
     public async Task<IEnumerable<Product>> GetProductsForCategoryAsync(string category)
     {
-        logger.LogInformation("Calling repository.");
+        using var scope = logger.BeginScope(
+            new Dictionary<string, object> { ["category"] = category });
+
+        FastLog.CallingRepository(logger); // high-performance situations
+        //logger.LogInformation("Calling repository.");
         return await repo.GetProductsAsync(category);
     }
 

@@ -2,6 +2,7 @@ using CarvedRock.Api;
 using CarvedRock.Core;
 using CarvedRock.Data;
 using CarvedRock.Domain;
+using CarvedRock.ServiceDefaults;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
@@ -70,6 +71,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<UserScopeMiddleware>();
 app.MapControllers().RequireAuthorization();
 
 app.Run();

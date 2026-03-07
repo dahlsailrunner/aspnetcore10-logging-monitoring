@@ -1,5 +1,7 @@
+using CarvedRock.ServiceDefaults;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Compliance.Redaction;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
@@ -46,9 +48,13 @@ public static class Extensions
 
     public static TBuilder ConfigureOpenTelemetry<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
+        // builder.Logging.EnableRedaction();
+        // builder.Services.AddRedaction(builder =>
+        //     builder.SetRedactor<ErasingRedactor>(SensitiveDataTypes.Private));
+
         builder.Logging.AddOpenTelemetry(logging =>
         {
-            logging.IncludeFormattedMessage = true;
+            logging.IncludeFormattedMessage = false;
             logging.IncludeScopes = true;
             logging.AddProcessor(new ExceptionDataProcessor());
         });

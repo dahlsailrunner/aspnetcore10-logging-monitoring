@@ -20,7 +20,14 @@ app.UseExceptionHandler();
 
 app.MapGet("/", (ILogger<Program> logger, Greeter greeter) =>
 {
-    logger.LogInformation("Got into root request.");
+    using var scope = logger.BeginScope<Dictionary<string, object>>(new()
+    {
+        ["something"] = "interesting",
+        ["something-else"] = "even more interesting"
+    });
+
+    //logger.LogInformation("Got into root request.");
+    Log.RootRequest(logger); // high performance
     return greeter.Greet("Logging World");
 });
 
