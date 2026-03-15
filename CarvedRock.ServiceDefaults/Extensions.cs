@@ -1,11 +1,8 @@
-using CarvedRock.ServiceDefaults;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Compliance.Redaction;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.ServiceDiscovery;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
@@ -57,6 +54,8 @@ public static class Extensions
             logging.IncludeFormattedMessage = false;
             logging.IncludeScopes = true;
             logging.AddProcessor(new ExceptionDataProcessor());
+            // example redaction processor: 
+            // https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/logs/redaction
         });
 
         builder.Services.AddOpenTelemetry()
