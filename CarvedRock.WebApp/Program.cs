@@ -1,4 +1,5 @@
 using CarvedRock.Core;
+using CarvedRock.ServiceDefaults;
 using CarvedRock.WebApp;
 using Duende.AccessTokenManagement.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
@@ -66,6 +67,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<UserScopeMiddleware>();
 
 app.MapRazorPages().RequireAuthorization();
 

@@ -51,7 +51,7 @@ public static class Extensions
 
         builder.Logging.AddOpenTelemetry(logging =>
         {
-            logging.IncludeFormattedMessage = false;
+            //logging.IncludeFormattedMessage = false;
             logging.IncludeScopes = true;
             logging.AddProcessor(new ExceptionDataProcessor());
             // example redaction processor: 

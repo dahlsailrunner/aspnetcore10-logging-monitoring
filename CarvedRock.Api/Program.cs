@@ -5,6 +5,7 @@ using CarvedRock.Domain;
 using CarvedRock.ServiceDefaults;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -57,7 +58,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IProductLogic, ProductLogic>();
-builder.AddNpgsqlDbContext<LocalContext>("CarvedRockPostgres");
+
+builder.AddNpgsqlDbContext<LocalContext>("CarvedRockPostgres"); // aspire integration
+// "old-school" postgres ef core db context creation
+// var cstr = builder.Configuration.GetConnectionString("CarvedRockPostgres");
+// builder.Services.AddDbContext<LocalContext>(options =>
+//     options.UseNpgsql(cstr));
+
 builder.Services.AddScoped<ICarvedRockRepository, CarvedRockRepository>();
 
 var app = builder.Build();
