@@ -1,0 +1,89 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarvedRock.Api", "CarvedRock.Api\CarvedRock.Api.csproj", "{2B2F8653-E41A-8ECC-41F8-3EEF0A73FEB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarvedRock.AppHost", "CarvedRock.AppHost\CarvedRock.AppHost.csproj", "{C67C0641-7865-C248-E452-B9C9FB3B9DB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarvedRock.Core", "CarvedRock.Core\CarvedRock.Core.csproj", "{A5648DCD-257D-E3AB-2FCF-FBCBCB84ED65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarvedRock.Data", "CarvedRock.Data\CarvedRock.Data.csproj", "{0F9D5E34-CA0A-68FB-A748-1429C44AE52B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarvedRock.Domain", "CarvedRock.Domain\CarvedRock.Domain.csproj", "{5D7F0C1E-F0E8-2FA2-F94A-BE5C2E39C7D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarvedRock.Mcp", "CarvedRock.Mcp\CarvedRock.Mcp.csproj", "{F86E7D81-B309-9512-9503-4AEAFA1BCF90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarvedRock.ServiceDefaults", "CarvedRock.ServiceDefaults\CarvedRock.ServiceDefaults.csproj", "{4DD7EBBB-0EB6-88F8-0756-466AD5A7BAEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarvedRock.WebApp", "CarvedRock.WebApp\CarvedRock.WebApp.csproj", "{903E9FD3-830E-A17A-26C4-292E33B4C7D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo.duendesoftware.com", "demo.duendesoftware.com", "{4F46A7AA-B69D-421A-5D9B-EB3138AB17E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloLogging", "HelloLogging\HelloLogging.csproj", "{532FAD22-7495-834C-7F03-65D8CE99B523}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailKit.Client", "MailKit.Client\MailKit.Client.csproj", "{F861D746-D095-9802-95DC-A91C6C6A1A0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Duende.IdentityServer.Demo", "demo.duendesoftware.com\Duende.IdentityServer.Demo.csproj", "{D8C378D0-A5F5-4ECF-607B-5DB1E47CC68E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B2F8653-E41A-8ECC-41F8-3EEF0A73FEB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B2F8653-E41A-8ECC-41F8-3EEF0A73FEB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B2F8653-E41A-8ECC-41F8-3EEF0A73FEB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B2F8653-E41A-8ECC-41F8-3EEF0A73FEB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C67C0641-7865-C248-E452-B9C9FB3B9DB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C67C0641-7865-C248-E452-B9C9FB3B9DB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C67C0641-7865-C248-E452-B9C9FB3B9DB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C67C0641-7865-C248-E452-B9C9FB3B9DB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5648DCD-257D-E3AB-2FCF-FBCBCB84ED65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5648DCD-257D-E3AB-2FCF-FBCBCB84ED65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5648DCD-257D-E3AB-2FCF-FBCBCB84ED65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5648DCD-257D-E3AB-2FCF-FBCBCB84ED65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F9D5E34-CA0A-68FB-A748-1429C44AE52B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F9D5E34-CA0A-68FB-A748-1429C44AE52B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F9D5E34-CA0A-68FB-A748-1429C44AE52B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F9D5E34-CA0A-68FB-A748-1429C44AE52B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D7F0C1E-F0E8-2FA2-F94A-BE5C2E39C7D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D7F0C1E-F0E8-2FA2-F94A-BE5C2E39C7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D7F0C1E-F0E8-2FA2-F94A-BE5C2E39C7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D7F0C1E-F0E8-2FA2-F94A-BE5C2E39C7D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F86E7D81-B309-9512-9503-4AEAFA1BCF90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F86E7D81-B309-9512-9503-4AEAFA1BCF90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F86E7D81-B309-9512-9503-4AEAFA1BCF90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F86E7D81-B309-9512-9503-4AEAFA1BCF90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DD7EBBB-0EB6-88F8-0756-466AD5A7BAEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DD7EBBB-0EB6-88F8-0756-466AD5A7BAEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DD7EBBB-0EB6-88F8-0756-466AD5A7BAEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DD7EBBB-0EB6-88F8-0756-466AD5A7BAEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{903E9FD3-830E-A17A-26C4-292E33B4C7D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{903E9FD3-830E-A17A-26C4-292E33B4C7D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{903E9FD3-830E-A17A-26C4-292E33B4C7D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{903E9FD3-830E-A17A-26C4-292E33B4C7D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{532FAD22-7495-834C-7F03-65D8CE99B523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{532FAD22-7495-834C-7F03-65D8CE99B523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{532FAD22-7495-834C-7F03-65D8CE99B523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{532FAD22-7495-834C-7F03-65D8CE99B523}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F861D746-D095-9802-95DC-A91C6C6A1A0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F861D746-D095-9802-95DC-A91C6C6A1A0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F861D746-D095-9802-95DC-A91C6C6A1A0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F861D746-D095-9802-95DC-A91C6C6A1A0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8C378D0-A5F5-4ECF-607B-5DB1E47CC68E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8C378D0-A5F5-4ECF-607B-5DB1E47CC68E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8C378D0-A5F5-4ECF-607B-5DB1E47CC68E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8C378D0-A5F5-4ECF-607B-5DB1E47CC68E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D8C378D0-A5F5-4ECF-607B-5DB1E47CC68E} = {4F46A7AA-B69D-421A-5D9B-EB3138AB17E2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E10A24A8-E366-43DE-8B09-4F7E9FB4A5C9}
+	EndGlobalSection
+EndGlobal
