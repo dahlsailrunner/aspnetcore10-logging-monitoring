@@ -95,7 +95,7 @@ public static class Extensions
                     //AlwaysOffSampler – Records no traces.
                     //TraceIdRatioBasedSampler – Records a percentage of traces based on trace ID.
                     //ParentBasedSampler – Respects the parent span’s sampling decision.
-                    .SetSampler(new TraceIdRatioBasedSampler(0.1)) // 10% sampling rate
+                    //.SetSampler(new TraceIdRatioBasedSampler(0.1)) // 10% sampling rate
 
                     .AddSource(builder.Environment.ApplicationName)
                     //.AddSource("CarvedRock.*")
