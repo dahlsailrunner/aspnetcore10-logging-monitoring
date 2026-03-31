@@ -5,7 +5,6 @@ using CarvedRock.Domain;
 using CarvedRock.ServiceDefaults;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -19,6 +18,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<NewProductValidator>();
 builder.Services.AddProblemDetails(opts => opts.CustomizeProblemDetails = CustomizeProblemDetails);
 builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
 
+// package: Aspire.Azure.AI.OpenAI
 // builder.AddAzureOpenAIClient("kyt-AzureOpenAI", configureSettings: settings =>
 // {
 //     settings.EnableSensitiveTelemetryData = true;
@@ -26,7 +26,7 @@ builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
 //     settings.Key = builder.Configuration.GetValue<string>("AIConnection:Key")!;
 // }).AddChatClient(builder.Configuration.GetValue<string>("AIConnection:Deployment")!);
 
-// Add NuGet package reference to Aspire.OpenAI
+// package: Aspire.OpenAI
 // Then add your API key for OpenAI to user secrets for the AIConnection:OpenAIKey value
 builder.AddOpenAIClient("kyt-OpenAI", configureSettings: settings =>
 {

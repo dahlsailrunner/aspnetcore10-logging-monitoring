@@ -5,6 +5,7 @@ using Duende.AccessTokenManagement.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics.Metrics;
 using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +40,8 @@ builder.Services.AddAuthentication(options =>
     options.SaveTokens = true;
 });
 
+builder.Services.AddSingleton<CarvedRockMetrics>();
+
 builder.Services.AddTransient<IClaimsTransformation, AdminClaimsTransformation>();
 builder.Services.AddHttpContextAccessor();
 
@@ -47,7 +50,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<IProductService, ProductService>();
 
 builder.Services.AddOpenIdConnectAccessTokenManagement();
-builder.Services.AddUserAccessTokenHttpClient("AI",
+builder.Services.AddUserAccessTokenHttpClient("AI", 
        configureClient: client => client.BaseAddress = new("https://api"));
 
 builder.AddMailKitClient("smtp");

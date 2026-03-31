@@ -5,7 +5,8 @@ using System.Text;
 
 namespace CarvedRock.WebApp.Pages;
 
-public partial class ListingModel(IProductService productService, 
+public partial class ListingModel(IProductService productService,
+    CarvedRockMetrics metrics,
     IHttpClientFactory httpClientFactory) : PageModel
 {
     public List<ProductModel> Products { get; set; } = [];
@@ -23,6 +24,8 @@ public partial class ListingModel(IProductService productService,
             CategoryName = Products.First().Category[..1].ToUpper() +
                            Products.First().Category[1..];
         }
+
+        metrics.ListingPageWasViewed();
     }
 
     public async Task<IActionResult> OnGetChat(string message, CancellationToken cxl)
@@ -31,7 +34,18 @@ public partial class ListingModel(IProductService productService,
         Response.Headers.Append("Cache-Control", "no-cache");
         HttpContext.Features.Get<Microsoft.AspNetCore.Http.Features.IHttpResponseBodyFeature>()?.DisableBuffering();
 
-        var client = httpClientFactory.CreateClient("AI");
+        HttpClient client;
+        if (User?.Identity?.IsAuthenticated ?? false)
+        {
+            // must be authenticated
+            client = httpClientFactory.CreateClient("AI"); // uses access token management
+        }
+        else // anonymous
+        {
+            client = httpClientFactory.CreateClient();
+            client.BaseAddress = new("https://api");
+        }
+
 
         var request = new HttpRequestMessage(HttpMethod.Get,
             $"Agent?message={Uri.EscapeDataString(message ?? string.Empty)}");
@@ -43,7 +57,7 @@ public partial class ListingModel(IProductService productService,
         var buffer = new byte[4096];
         var decoder = Encoding.UTF8;
         int read;
-        while ((read = await stream.ReadAsync(buffer.AsMemory(0, buffer.Length), cxl)) > 0 && 
+        while ((read = await stream.ReadAsync(buffer.AsMemory(0, buffer.Length), cxl)) > 0 &&
             !cxl.IsCancellationRequested)
         {
             var chunk = decoder.GetString(buffer, 0, read);

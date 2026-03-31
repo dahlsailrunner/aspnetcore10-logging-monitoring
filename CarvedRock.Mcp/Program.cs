@@ -38,13 +38,13 @@ builder.Services.AddAuthentication(options =>
             };
         })
         .AddMcp(options =>
-        {            
+        {
             options.ResourceMetadata = new ProtectedResourceMetadata
             {
-                Resource = new Uri(mcpServerUrl),
-                AuthorizationServers = { new Uri(authServer) },
-                ScopesSupported = ["api", "openid", "profile", "email", "offline_access"],                
-            };            
+                Resource = mcpServerUrl,
+                AuthorizationServers = { authServer },
+                ScopesSupported = ["api", "openid", "profile", "email", "offline_access"],
+            };
         });
 
 builder.Services.AddAuthorization();
@@ -55,17 +55,17 @@ builder.Services.AddMcpServer()
     {
         options.Stateless = true; // important for scaling
         //options.ConfigureSessionOptions = AuthHelper.AuthorizeToolsForUser;
-    })    
-    .WithPromptsFromAssembly() 
+    })
+    .WithPromptsFromAssembly()
     .WithToolsFromAssembly() // just get everything registered, then use authz attributes to filter
-    //.WithTools<CarvedRockTools>() 
-    //.WithTools<AdminTools>()
-    // Authorization Filter info: https://modelcontextprotocol.github.io/csharp-sdk/concepts/filters.html#built-in-authorization-filters
+                             //.WithTools<CarvedRockTools>() 
+                             //.WithTools<AdminTools>()
+                             // Authorization Filter info: https://modelcontextprotocol.github.io/csharp-sdk/concepts/filters.html#built-in-authorization-filters
     .AddAuthorizationFilters();  // Add support for [Authorize] and [AllowAnonymous]
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<TokenForwarder>();
-builder.Services.AddHttpClient("CarvedRockApi", 
+builder.Services.AddHttpClient("CarvedRockApi",
         client => client.BaseAddress = new("https://api"))
     .AddHttpMessageHandler<TokenForwarder>(); ;
 
@@ -73,7 +73,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseCors("DevAll");   
+    app.UseCors("DevAll");
 }
 
 app.MapDefaultEndpoints();
@@ -82,6 +82,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 var mcpEndpoint = app.MapMcp();
-    //.RequireAuthorization();  // this would require auth for **all** connections (even "initialize")
-                              // only add if you don't have any anonymous tools to support
+//.RequireAuthorization();  // this would require auth for **all** connections (even "initialize")
+// only add if you don't have any anonymous tools to support
 app.Run();

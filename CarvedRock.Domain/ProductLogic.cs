@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using CarvedRock.Core;
 using CarvedRock.Data;
 using CarvedRock.Data.Entities;
@@ -9,6 +10,7 @@ namespace CarvedRock.Domain;
 
 public class ProductLogic(ICarvedRockRepository repo,
             IValidator<NewProductModel> newProductValidator,
+            ActivitySource activitySource,
             ILogger<ProductLogic> logger) : IProductLogic
 {
     public async Task<IEnumerable<Product>> GetProductsForCategoryAsync(string category)
@@ -23,6 +25,20 @@ public class ProductLogic(ICarvedRockRepository repo,
 
     public async Task<Product?> GetProductByIdAsync(int id)
     {
+        // custom trace example
+        // basics: https://opentelemetry.io/docs/zero-code/dotnet/custom/#traces
+        // more info: https://learn.microsoft.com/en-us/dotnet/core/diagnostics/distributed-tracing-instrumentation-walkthroughs
+
+        // activitysource added as singleton in servicedefaults
+        // keep in mind that http calls, grpc calls, and aspire integrations should trace out of the box
+        //   e.g. redis, mongo, sqlserver, file storage, lots more
+        //var activitySource = new ActivitySource("CarvedRock.Inventory");
+        using (var activity = activitySource.StartActivity("INVENTORY SingleProduct"))
+        {
+            activity?.SetTag("product", id.ToString());                                    
+            await Task.Delay(250); // quarter of a second -- do some logic that's interesting
+        } // activity will stop when using statement completes
+
         return await repo.GetProductByIdAsync(id);
     }
 

@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +19,8 @@ public static class Extensions
 {
     private const string HealthEndpointPath = "/health";
     private const string AlivenessEndpointPath = "/alive";
+    private const string ServiceNamespace = "carvedrock-sample";
+    private const string OtelResourceAttributesKey = "OTEL_RESOURCE_ATTRIBUTES";
 
     public static TBuilder AddServiceDefaults<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
@@ -49,6 +54,17 @@ public static class Extensions
         // builder.Services.AddRedaction(builder =>
         //     builder.SetRedactor<ErasingRedactor>(SensitiveDataTypes.Private));
 
+        var entryAssembly = Assembly.GetEntryAssembly();
+
+        var resourceAttributes = MergeOtelResourceAttributes(
+            builder.Configuration[OtelResourceAttributesKey],
+            new KeyValuePair<string, string>("service.namespace", ServiceNamespace),
+            new KeyValuePair<string, string>("deployment.environment.name", builder.Environment.EnvironmentName),
+            new KeyValuePair<string, string>("telemetry.sdk.version", Environment.Version.ToString()));
+
+        builder.Configuration[OtelResourceAttributesKey] = resourceAttributes;
+        Environment.SetEnvironmentVariable(OtelResourceAttributesKey, resourceAttributes);
+
         builder.Logging.AddOpenTelemetry(logging =>
         {
             //logging.IncludeFormattedMessage = false;
@@ -61,13 +77,30 @@ public static class Extensions
         builder.Services.AddOpenTelemetry()
             .WithMetrics(metrics =>
             {
-                metrics.AddAspNetCoreInstrumentation()
+                metrics
+                    .AddMeter("CarvedRock.*")
+                    .AddMeter("Experimental.ModelContextProtocol")
+                    //.AddMeter("*.*") // review what's available
+                    .AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
                     .AddRuntimeInstrumentation();
             })
             .WithTracing(tracing =>
             {
-                tracing.AddSource(builder.Environment.ApplicationName)
+                tracing
+                    // https://opentelemetry.io/docs/concepts/sampling/
+                    // https://opentelemetry.io/docs/languages/dotnet/traces/stratified-sampling/
+                    // other docs in same place
+                    //AlwaysOnSampler – Records all traces (default).
+                    //AlwaysOffSampler – Records no traces.
+                    //TraceIdRatioBasedSampler – Records a percentage of traces based on trace ID.
+                    //ParentBasedSampler – Respects the parent span’s sampling decision.
+                    .SetSampler(new TraceIdRatioBasedSampler(0.1)) // 10% sampling rate
+
+                    .AddSource(builder.Environment.ApplicationName)
+                    //.AddSource("CarvedRock.*")
+                    //.AddSource("*.*") // review what's available
+                    .AddSource("Experimental.ModelContextProtocol")
                     .AddAspNetCoreInstrumentation(tracing =>
                         // Exclude health check requests from tracing
                         tracing.Filter = context =>
@@ -78,6 +111,7 @@ public static class Extensions
                     //.AddGrpcClientInstrumentation()
                     .AddHttpClientInstrumentation();
             });
+        builder.Services.AddSingleton(new ActivitySource(builder.Environment.ApplicationName));
 
         builder.AddOpenTelemetryExporters();
 
@@ -129,6 +163,41 @@ public static class Extensions
         }
 
         return app;
+    }
+
+    private static string MergeOtelResourceAttributes(
+        string? existingValue,
+        params KeyValuePair<string, string>[] attributes)
+    {
+        var mergedAttributes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        if (!string.IsNullOrWhiteSpace(existingValue))
+        {
+            foreach (var attribute in existingValue.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                var separatorIndex = attribute.IndexOf('=');
+                if (separatorIndex <= 0 || separatorIndex == attribute.Length - 1)
+                {
+                    continue;
+                }
+
+                var key = attribute[..separatorIndex].Trim();
+                var value = attribute[(separatorIndex + 1)..].Trim();
+                if (key.Length == 0 || value.Length == 0)
+                {
+                    continue;
+                }
+
+                mergedAttributes[key] = value;
+            }
+        }
+
+        foreach (var attribute in attributes)
+        {
+            mergedAttributes[attribute.Key] = attribute.Value;
+        }
+
+        return string.Join(',', mergedAttributes.Select(attribute => $"{attribute.Key}={attribute.Value}"));
     }
 }
 
