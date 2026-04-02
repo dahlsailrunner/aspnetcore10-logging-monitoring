@@ -49,6 +49,8 @@ public static class Extensions
 
     public static TBuilder ConfigureOpenTelemetry<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
+        // docs: https://aspire.dev/fundamentals/telemetry/
+
         // builder.Logging.EnableRedaction();
         // builder.Services.AddRedaction(builder =>
         //     builder.SetRedactor<ErasingRedactor>(SensitiveDataTypes.Private));
