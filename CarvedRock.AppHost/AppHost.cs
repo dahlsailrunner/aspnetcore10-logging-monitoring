@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using Projects;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -32,8 +33,12 @@ api.WithReference(mcp);  // add reference to mcp server from API
 builder.AddMcpInspector("mcp-inspector")
     .WithMcpServer(mcp, path: "");
 
+var key = builder.Configuration.GetValue<string>("AppHost:DataDogApiKey");
+
 builder.AddOpenTelemetryCollector("opentelemetry-collector")
     .WithAppForwarding()
+    .WithEnvironment("DD_API_KEY", key)
+    .WithEnvironment("DD_SITE", "us5.datadoghq.com")
     .WithConfig("./config.yaml");
 
 builder.Build().Run();
