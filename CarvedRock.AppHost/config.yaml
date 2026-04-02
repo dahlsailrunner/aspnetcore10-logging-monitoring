@@ -28,18 +28,20 @@ exporters:
     api:
       key: ${env:DD_API_KEY}
       site: ${env:DD_SITE}
+  azuremonitor:
+    connection_string: ${env:APPLICATIONINSIGHTS_CONNECTION_STRING}
   
 service:
   pipelines:
     traces:
       receivers: [otlp]
       processors: [batch, transform/add-collector-enabled]
-      exporters: [otlp/aspire, datadog]
+      exporters: [otlp/aspire, datadog, azuremonitor]
     metrics:
       receivers: [otlp]
       processors: [batch, transform/add-collector-enabled]
-      exporters: [otlp/aspire, datadog]
+      exporters: [otlp/aspire, datadog, azuremonitor]
     logs:
       receivers: [otlp]
       processors: [batch, transform/add-collector-enabled]
-      exporters: [debug, otlp/aspire, datadog]
+      exporters: [debug, otlp/aspire, datadog, azuremonitor]
