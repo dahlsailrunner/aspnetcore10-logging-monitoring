@@ -32,4 +32,8 @@ api.WithReference(mcp);  // add reference to mcp server from API
 builder.AddMcpInspector("mcp-inspector")
     .WithMcpServer(mcp, path: "");
 
+builder.AddOpenTelemetryCollector("opentelemetry-collector")
+    .WithAppForwarding()
+    .WithConfig("./config.yaml");
+
 builder.Build().Run();
