@@ -30,6 +30,10 @@ exporters:
       site: ${env:DD_SITE}
   azuremonitor:
     connection_string: ${env:APPLICATIONINSIGHTS_CONNECTION_STRING}
+  # otlphttp/elastic:
+  #   endpoint: ${env:ELK_APM_ENDPOINT}
+  #   headers:
+  #     Authorization: "Bearer ${env:ELK_KEY}"
   
 service:
   pipelines:
