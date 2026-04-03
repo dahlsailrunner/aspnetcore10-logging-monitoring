@@ -125,3 +125,31 @@ secrets for the API project and set the `AIConnection:Key` value.
 
 If you'd rather use OpenAI directly (also pretty simple), see the commented out
 code and notes in `Program.cs` of the API project.
+
+## OpenTelemetry Collector
+
+This project uses the [CommunityToolkit.Aspire.Hosting.OpenTelemetryCollector](https://aspire.dev/integrations/gallery/?search=collector) hosting integration, which references the
+`ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest`
+container image.
+
+All the configuration is in the `config.yaml` file in the AppHost directory, and it
+references environment variables set by the app host in either its `launchSettings.json` file
+or from user secrets.
+
+To run the collector on its own, you need to set those variables for when it runs
+and then point any app's OTEL exporter at the collector.
+
+Here's a sample docker command to run the image (you would need to provide your own
+key for DataDog):
+
+```posh
+docker run `
+-v ./config.yaml:/etc/otelcol-contrib/config.yaml `
+-p 4317:4317 -p 4318:4318 -d `
+-e DD_API_KEY=<your-datadog-key> `
+-e DD_SITE=us5.datadoghq.com `
+ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib 
+```
+
+Then run the `HelloLogging` project with `dotnet run` - after you've commented IN
+the OTEL environment variables in the `launchSettings.json` file for that project.

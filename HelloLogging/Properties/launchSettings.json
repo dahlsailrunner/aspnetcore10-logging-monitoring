@@ -1,15 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "http": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "applicationUrl": "http://localhost:5035",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
     "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
@@ -17,6 +8,18 @@
       "applicationUrl": "https://localhost:7255;http://localhost:5035",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+        // "OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:4317",
+        // "OTEL_SERVICE_NAME": "hello-logging-scratchpad",
+        // "OTEL_BLRP_SCHEDULE_DELAY": "1000",
+        // "OTEL_BSP_SCHEDULE_DELAY": "1000",
+        // "OTEL_DOTNET_EXPERIMENTAL_ASPNETCORE_DISABLE_URL_QUERY_REDACTION": "true",
+        // "OTEL_DOTNET_EXPERIMENTAL_HTTPCLIENT_DISABLE_URL_QUERY_REDACTION": "true",
+        // "OTEL_DOTNET_EXPERIMENTAL_OLTP_RETRY": "in_memory",
+        // "OTEL_EXPORTER_OTLP_PROTOCOL": "grpc",
+        // "OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT": "true",
+        // "OTEL_METRICS_EXEMPLAR_FILTER": "trace_based",
+        // "OTEL_METRIC_EXPORT_INTERVAL": "1000",
+        // "OTEL_TRACES_SAMPLER": "always_on"
       }
     }
   }

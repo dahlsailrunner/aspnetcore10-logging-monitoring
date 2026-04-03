@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // builder.Logging.AddDebug();
 // builder.Logging.AddConsole();
 
+var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
 builder.AddServiceDefaults();
 builder.Services.AddProblemDetails(options =>
 {

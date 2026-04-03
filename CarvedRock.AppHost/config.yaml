@@ -24,28 +24,28 @@ exporters:
     endpoint: ${env:ASPIRE_ENDPOINT}
     headers:
       x-otlp-api-key: ${env:ASPIRE_API_KEY}
+  azuremonitor:
+    connection_string: ${env:APP_INSIGHTS_CONN}
   datadog:
     api:
       key: ${env:DD_API_KEY}
       site: ${env:DD_SITE}
-  azuremonitor:
-    connection_string: ${env:APPLICATIONINSIGHTS_CONNECTION_STRING}
-  # otlphttp/elastic:
-  #   endpoint: ${env:ELK_APM_ENDPOINT}
-  #   headers:
-  #     Authorization: "Bearer ${env:ELK_KEY}"
+
   
 service:
   pipelines:
     traces:
       receivers: [otlp]
       processors: [batch, transform/add-collector-enabled]
-      exporters: [otlp/aspire, datadog, azuremonitor]
+      exporters: [otlp/aspire, azuremonitor, datadog]
+      #exporters: [datadog]
     metrics:
       receivers: [otlp]
       processors: [batch, transform/add-collector-enabled]
-      exporters: [otlp/aspire, datadog, azuremonitor]
+      exporters: [otlp/aspire, azuremonitor, datadog]
+      #exporters: [datadog]
     logs:
       receivers: [otlp]
       processors: [batch, transform/add-collector-enabled]
-      exporters: [debug, otlp/aspire, datadog, azuremonitor]
+      exporters: [otlp/aspire, azuremonitor, datadog]
+      #exporters: [datadog]

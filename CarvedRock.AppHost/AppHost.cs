@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Configuration;
 using Projects;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -33,18 +32,17 @@ api.WithReference(mcp);  // add reference to mcp server from API
 builder.AddMcpInspector("mcp-inspector")
     .WithMcpServer(mcp, path: "");
 
-var key = builder.Configuration["AppHost:DataDogApiKey"];
-var aiConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
-
 // package: CommunityToolkit.Aspire.Hosting.OpenTelemetryCollector
 // image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest
-builder.AddOpenTelemetryCollector("opentelemetry-collector")
-    .WithAppForwarding()
-    .WithEnvironment("DD_API_KEY", key)
-    .WithEnvironment("DD_SITE", "us5.datadoghq.com")
-    .WithEnvironment("APPLICATIONINSIGHTS_CONNECTION_STRING", aiConnectionString)
-    //.WithEnvironment("ELK_APM_ENDPOINT", builder.Configuration["ELK_APM_ENDPOINT"])
-    //.WithEnvironment("ELK_KEY", builder.Configuration["ELK_KEY"])
-    .WithConfig("./config.yaml");
+// https://aspire.dev/fundamentals/telemetry/
+// https://opentelemetry.io/docs/collector/components/
+// https://aspire.dev/integrations/gallery/?search=collector
+
+// builder.AddOpenTelemetryCollector("opentelemetry-collector")
+//     .WithAppForwarding() 
+//     .WithEnvironment("APP_INSIGHTS_CONN", builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"])   
+//     .WithEnvironment("DD_SITE", "us5.datadoghq.com")
+//     .WithEnvironment("DD_API_KEY", builder.Configuration["AppHost:DataDogApiKey"])
+//     .WithConfig("./config.yaml");
 
 builder.Build().Run();
