@@ -30,6 +30,10 @@ exporters:
     api:
       key: ${env:DD_API_KEY}
       site: ${env:DD_SITE}
+  otlphttp/elastic:
+    endpoint: ${env:ELK_APM_ENDPOINT}
+    headers:
+      Authorization: "Bearer ${env:ELK_KEY}"
 
   
 service:
@@ -37,15 +41,15 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch, transform/add-collector-enabled]
-      exporters: [otlp/aspire, azuremonitor, datadog]
+      exporters: [otlp/aspire, azuremonitor, datadog, otlphttp/elastic]
       #exporters: [datadog]
     metrics:
       receivers: [otlp]
       processors: [batch, transform/add-collector-enabled]
-      exporters: [otlp/aspire, azuremonitor, datadog]
+      exporters: [otlp/aspire, azuremonitor, datadog, otlphttp/elastic]
       #exporters: [datadog]
     logs:
       receivers: [otlp]
       processors: [batch, transform/add-collector-enabled]
-      exporters: [otlp/aspire, azuremonitor, datadog]
+      exporters: [otlp/aspire, azuremonitor, datadog, otlphttp/elastic]
       #exporters: [datadog]

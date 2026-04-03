@@ -43,6 +43,8 @@ builder.AddMcpInspector("mcp-inspector")
 //     .WithEnvironment("APP_INSIGHTS_CONN", builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"])   
 //     .WithEnvironment("DD_SITE", "us5.datadoghq.com")
 //     .WithEnvironment("DD_API_KEY", builder.Configuration["AppHost:DataDogApiKey"])
+//     .WithEnvironment("ELK_APM_ENDPOINT", builder.Configuration["ELK_APM_ENDPOINT"])
+//     .WithEnvironment("ELK_KEY", builder.Configuration["ELK_KEY"])	
 //     .WithConfig("./config.yaml");
 
 builder.Build().Run();
